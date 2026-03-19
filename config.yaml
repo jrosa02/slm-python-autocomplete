@@ -1,0 +1,46 @@
+# Fine-tuning Configuration
+pipeline:
+  # Run dataset download
+  download_dataset: true
+  # Run model download
+  download_model: true
+  # Run training
+  train: true
+
+# Dataset Configuration
+dataset:
+  dataset_name: "shibing624"  # Options: "shibing624", "code_x_glue", "codesearch"
+  max_samples: 5000
+  output_dir: "data/formatted"
+  format_type: "completion"  # "completion" or "instruction"
+  min_length: 50
+  max_length: 2048
+
+# Model Configuration
+model:
+  model_name: "Qwen/Qwen2.5-Coder-3B"
+  cache_dir: "models"
+  device: "auto"  # "auto", "cpu", "cuda"
+
+# Training Configuration
+training:
+  data_dir: "data/formatted"
+  output_dir: "outputs/checkpoints"
+  batch_size: 4
+  max_epochs: 3
+  lora_rank: 8
+  lora_alpha: 16
+  lora_dropout: 0.05
+  learning_rate: 5e-4
+  accumulate_grad_batches: 1
+  precision: "16-mixed"  # "32", "16-mixed", "bf16-mixed"
+  num_workers: 0
+  enable_early_stopping: true
+  warmup_steps: 500
+  weight_decay: 0.01
+
+# Metrics/Logging Configuration
+logging:
+  metrics_dir: "outputs/metrics"
+  metrics_file: "training_metrics.json"
+  log_every_n_steps: 10
